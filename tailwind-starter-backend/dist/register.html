@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Register Page</title>
+</head>
+<body class="bg-gray-100">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-12 rounded-lg shadow-lg w-full max-w-lg animate-fadeIn">
+      <form id="register-form">
+        <div class="flex items-center justify-center mb-6">
+          <h2 class="text-3xl font-bold text-center"><i class="fa-solid fa-user-plus"></i> Register</h2>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="id_number">
+            ID Number
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="id_number" name="id_number" type="text" placeholder="ID Number">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="full_name">
+            Full Name
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="full_name" name="full_name" type="text" placeholder="Full Name">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+            Email Address
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Email Address">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
+            Year
+          </label>
+          <select class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="year" name="year">
+            <option value="1st">1st Year</option>
+            <option value="2nd">2nd Year</option>
+            <option value="3rd">3rd Year</option>
+            <option value="4th">4th Year</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="course">
+            Course
+          </label>
+          <select class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="course" name="course">
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Software Engineering">Software Engineering</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Cyber Security">Cyber Security</option>
+            <option value="Artificial Intelligence">Artificial Intelligence</option>
+          </select>
+        </div>
+        <div class="mb-4 relative">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Password">
+          <i class="fa fa-eye absolute right-3 top-10 cursor-pointer" id="togglePassword"></i>
+        </div>
+        <div class="mb-6 relative">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="confirm_password">
+            Confirm Password
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="confirm_password" name="confirm_password" type="password" placeholder="Confirm Password">
+          <i class="fa fa-eye absolute right-3 top-10 cursor-pointer" id="toggleConfirmPassword"></i>
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', function (e) {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmPassword = document.querySelector('#confirm_password');
+    toggleConfirmPassword.addEventListener('click', function (e) {
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    // Add event listener to the form to store data in local storage
+    document.getElementById('register-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const idNumber = document.getElementById('id_number').value;
+      const fullName = document.getElementById('full_name').value;
+      const email = document.getElementById('email').value;
+      const year = document.getElementById('year').value;
+      const course = document.getElementById('course').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idNumber, fullName, email, year, course, password }),
+      });
+
+      if (response.ok) {
+        window.location.href = 'index.html';
+      } else {
+        alert('Registration failed');
+      }
+    });
+  </script>
+</body>
+</html>
