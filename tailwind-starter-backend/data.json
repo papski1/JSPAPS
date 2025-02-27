@@ -1,0 +1,157 @@
+[
+  {
+    "idNumber": "231231",
+    "firstName": "Erica Faith",
+    "middleInitial": "Rivas",
+    "lastName": "Aguylo",
+    "email": "ericaaguylo03@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "123321",
+    "firstName": "Erica Faith",
+    "middleInitial": "Rivas",
+    "lastName": "Aguylo",
+    "email": "ericaaguylo03@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "094671",
+    "firstName": "Rey Mark",
+    "middleInitial": "Rivas",
+    "lastName": "Aguylo",
+    "email": "reymarkrivas16@gmail.com",
+    "year": "2nd",
+    "course": "Information Technology",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "0922",
+    "firstName": "Rey Mark",
+    "middleInitial": "Rivas",
+    "lastName": "Aguylo",
+    "email": "reymarkrivas63@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "0912",
+    "firstName": "Ralph",
+    "middleInitial": "NA",
+    "lastName": "Ravina",
+    "email": "ralphness@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "321312",
+    "firstName": "lakai",
+    "middleInitial": "paps",
+    "lastName": "leroi",
+    "email": "ckrivas2024@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "123322",
+    "firstName": "paps",
+    "middleInitial": "lakai",
+    "lastName": "leroi",
+    "email": "papsleroy13@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "322322",
+    "firstName": "paps",
+    "middleInitial": "lakai",
+    "lastName": "kikoy",
+    "email": "papskikoy616@gmaill.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "0933",
+    "firstName": "raplh",
+    "middleInitial": "lakai",
+    "lastName": "kikoy",
+    "email": "ralphravina212@gmail.com",
+    "year": "1st",
+    "course": "Computer Science",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "0999",
+    "firstName": "nhurm",
+    "middleInitial": "caday",
+    "lastName": "mohammad",
+    "email": "nhurm@gmail.com",
+    "year": "2nd",
+    "course": "Information Technology",
+    "password": "lakai2021."
+  },
+  {
+    "idNumber": "32323",
+    "firstName": "keilahni",
+    "middleInitial": "contance",
+    "lastName": "rivas",
+    "email": "ckrivas29@gmail.com",
+    "year": "2nd",
+    "course": "Software Engineering",
+    "password": "lakai2021.",
+    "profilePhoto": null
+  },
+  {
+    "idNumber": "23232",
+    "firstName": "Keilahni",
+    "middleInitial": "Caday",
+    "lastName": "Rivas",
+    "email": "ckrivas290@gmail.com",
+    "year": "2nd",
+    "course": "Software Engineering",
+    "password": "lakai2021.",
+    "profilePhoto": null
+  },
+  {
+    "idNumber": "3233",
+    "firstName": "Contance",
+    "middleInitial": "Caday",
+    "lastName": "Rivas",
+    "email": "ckrivas29@gmail.com",
+    "year": "2nd",
+    "course": "Data Science",
+    "password": "lakai2021.",
+    "profilePhoto": null
+  },
+  {
+    "idNumber": "09333",
+    "firstName": "rivas",
+    "middleInitial": "keilahni",
+    "lastName": "Rivas",
+    "email": "papsleroy13@gmail.com",
+    "year": "2nd",
+    "course": "Information Technology",
+    "password": "lakai2021.",
+    "profilePhoto": null
+  },
+  {
+    "idNumber": "09099",
+    "firstName": "dasdsa",
+    "middleInitial": "asdas",
+    "lastName": "dasdsa",
+    "email": "reymarkrivas63@gmail.com",
+    "year": "2nd",
+    "course": "Computer Science",
+    "password": "lakai2021.",
+    "profilePhoto": null
+  }
+]
