@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./styles/style.css" rel="stylesheet">
+  <title>Profile</title>
+  <style>
+    .dashboard-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-section h2 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .dashboard-section p {
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .dashboard-section input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .dashboard-section button {
+      background: #4f46e5;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .dashboard-section button:hover {
+      background: #6366f1;
+    }
+
+    /* Profile Image */
+    .profile-photo-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #4f46e5;
+      margin-bottom: 10px;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .upload-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 14px;
+      font-style: arial;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .profile-photo-container:hover .upload-label {
+      opacity: 1;
+    }
+
+    .profile-photo-container:hover .profile-photo {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="main-content" id="main-content">
+      <!-- Profile Section -->
+      <div class="dashboard-section">
+        <form id="profile-form">
+          <div class="profile-photo-container">
+            <label for="photo-input">
+              <img id="profile-photo" class="profile-photo" src="default-profile.png" alt="Profile Photo">
+              <span class="upload-label">Upload Photo</span>
+            </label>
+            <input type="file" id="photo-input" class="file-input" accept="image/*">
+          </div>
+
+          <label for="profile-id-number">ID Number:</label>
+          <input type="text" id="profile-id-number" name="profile-id-number" readonly>
+          <label for="profile-name">Name:</label>
+          <input type="text" id="profile-name" name="profile-name" readonly>
+          <label for="profile-email">Email:</label>
+          <input type="email" id="profile-email" name="profile-email" readonly>
+          <label for="profile-course">Course:</label>
+          <input type="text" id="profile-course" name="profile-course" readonly>
+          <label for="profile-year">Year:</label>
+          <input type="text" id="profile-year" name="profile-year" readonly>
+          <label for="profile-password">Password:</label>
+          <input type="password" id="profile-password" name="profile-password" readonly>
+
+          <button type="button" id="edit-profile">Edit Profile</button>
+          <button type="button" id="save-changes" style="display: none;">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    // Fetch the logged-in user's data from the server
+    const response = await fetch('/get-profile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch user data.');
+
+    const user = await response.json();
+
+    // Populate profile fields
+    document.getElementById('profile-id-number').value = user.idNumber;
+    document.getElementById('profile-name').value = `${user.firstName} ${user.middleInitial} ${user.lastName}`;
+    document.getElementById('profile-email').value = user.email;
+    document.getElementById('profile-course').value = user.course;
+    document.getElementById('profile-year').value = user.year;
+    document.getElementById('profile-password').value = user.password;
+
+    // Load profile photo if available
+    if (user.profilePhoto) {
+      document.getElementById('profile-photo').src = user.profilePhoto;
+    }
+  } catch (error) {
+    console.error('Error loading profile:', error);
+    window.location.href = 'index.html'; // Redirect if there's an error
+  }
+});
+
+// Handle profile updates
+    document.getElementById('save-changes').addEventListener('click', async function() {
+      const updatedUser = {
+        idNumber: document.getElementById('profile-id-number').value,
+        firstName: document.getElementById('profile-name').value.split(' ')[0],
+        middleInitial: document.getElementById('profile-name').value.split(' ')[1] || '',
+        lastName: document.getElementById('profile-name').value.split(' ')[2] || '',
+        email: document.getElementById('profile-email').value,
+        course: document.getElementById('profile-course').value,
+        year: document.getElementById('profile-year').value,
+        password: document.getElementById('profile-password').value
+      };
+
+      try {
+        const response = await fetch('/update-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedUser)
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error('Error updating profile:', error);
+      }
+    });
+
+  </script>
+</body>
+</html>

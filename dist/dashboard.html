@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./styles/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Student Dashboard</title>
+  <style>
+    .dashboard-container {
+      display: flex;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #f4f4f4;
+      height: 100vh;
+      padding: 15px;
+      transition: width 0.3s ease;
+    }
+
+    .sidebar.hidden {
+      width: 50px;
+      overflow: hidden;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    /* From Uiverse.io by JulanDeAlb */
+    .hamburger {
+      cursor: pointer;
+    }
+
+    .hamburger input {
+      display: none;
+    }
+
+    .hamburger svg {
+      height: 3em;
+      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line {
+      fill: none;
+      stroke: black;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                  stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line-top-bottom {
+      stroke-dasharray: 12 63;
+    }
+
+    .hamburger input:checked + svg {
+      transform: rotate(-45deg);
+    }
+
+    .hamburger input:checked + svg .line-top-bottom {
+      stroke-dasharray: 20 300;
+      stroke-dashoffset: -32.42;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .main-content.expanded {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #aaa;
+      color: black;
+      width: 100%;
+    }
+
+    .dashboard-header img {
+      margin-right: 20px;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2em;
+      margin: 0;
+    }
+
+    .dashboard-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-section h2 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .dashboard-section p {
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .dashboard-section input,
+    .dashboard-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .dashboard-section button {
+      background: #4f46e5;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dashboard-section button:hover {
+      background: #6366f1;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      animation: fadeIn 0.5s;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      height: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      animation: slideIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideIn {
+      from {transform: translateY(-50px);}
+      to {transform: translateY(0);}
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .round-logo {
+      width: 60px; /* Adjust the size as needed */
+      height: 60px; /* Adjust the size as needed */
+      border-radius: 50%; /* Makes the image round */
+      object-fit: cover; /* Ensures it fills the circular shape properly */
+    }
+    /* From Uiverse.io by kennyotsu-monochromia */ 
+    .Btn {
+      --black: #000000;
+      --ch-black: #141414;
+      --eer-black: #1b1b1b;
+      --night-rider: #2e2e2e;
+      --white: #ffffff;
+      --af-white: #f3f3f3;
+      --ch-white: #e1e1e1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition-duration: .3s;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+      background-color: var(--af-white);
+    }
+
+    /* plus sign */
+    .sign {
+      width: 100%;
+      transition-duration: .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sign svg {
+      width: 17px;
+    }
+
+    .sign svg path {
+      fill: var(--night-rider);
+    }
+    /* text */
+    .text {
+      position: absolute;
+      right: 0%;
+      width: 0%;
+      opacity: 0;
+      color: var(--night-rider);
+      font-size: 1.2em;
+      font-weight: 600;
+      transition-duration: .3s;
+    }
+    /* hover effect on button width */
+    .Btn:hover {
+      width: 125px;
+      border-radius: 5px;
+      transition-duration: .3s;
+    }
+
+    .Btn:hover .sign {
+      width: 30%;
+      transition-duration: .3s;
+      padding-left: 20px;
+    }
+    /* hover effect button's text */
+    .Btn:hover .text {
+      opacity: 1;
+      width: 70%;
+      transition-duration: .3s;
+      padding-right: 10px;
+    }
+    /* button click effect*/
+    .Btn:active {
+      transform: translate(2px ,2px);
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="dashboard-header">
+    <img class="round-logo" src="./images.png" alt="Header Image" />
+    <h1> SIT-IN MONITORING SYSTEM</h1>
+  </div>
+  <div class="dashboard-container">
+    <div class="sidebar" id="sidebar">
+      <div class="hamburger" onclick="toggleSidebar()">
+        <input type="checkbox" id="menu-toggle">
+        <svg viewBox="0 0 100 100">
+          <path class="line line-top-bottom" d="M 30 33 L 70 33"></path>
+          <path class="line" d="M 30 50 L 70 50"></path>
+          <path class="line line-top-bottom" d="M 30 67 L 70 67"></path>
+        </svg>
+      </div>
+      <div>
+        <h2>Announcements</h2>
+        <div id="announcements">
+          <p>No announcements at the moment.</p>
+        </div>
+      </div>
+      <button class="Btn" id="logout-button" onclick="logout()">
+        
+        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+        <div class="text">Logout</div>
+      </button>
+    </div>
+    <div class="main-content" id="main-content">
+      <!-- Profile Section -->
+      <div class="dashboard-section" id="profile-section" onclick="openModal('profile-modal')">
+        <h2>Profile</h2>
+        <iframe src="profile.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+      </div>
+
+      <!-- Lab Rules Section -->
+      <div class="dashboard-section" id="profile-section" onclick="openModal('lab-rules-modal')">
+        <h2>Lab Rules</h2>
+        <iframe src="lab-rules.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+      </div>
+
+      <!-- Sit-in History and Feedback Section -->
+      <div class="dashboard-section" id="profile-section" onclick="openModal('sitInHistory-modal')">
+        <h2>Sit-in History and Feedback</h2>
+        <iframe src="sitInHistory.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+      </div>
+
+      <!-- Reservation Section -->
+      <div class="dashboard-section" id="profile-section" onclick="openModal('reservation-modal')">
+        <h2>Reservation</h2>
+        <iframe src="reservation.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profile-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('profile-modal')">&times;</span>
+      <iframe src="profile.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+    </div>
+  </div>
+
+  <!-- Lab_Rules Modal -->
+  <div id="lab-rules-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('lab-rules-modal')">&times;</span>
+      <iframe src="lab-rules.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+    </div>
+  </div>
+
+  <!-- Sit-In History Modal -->
+  <div id="sitInHistory-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('sitInHistory-modal')">&times;</span>
+      <iframe src="sitInHistory.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+    </div>
+  </div>
+
+  <!-- Reservation Modal -->
+  <div id="reservation-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('reservation-modal')">&times;</span>
+      <iframe src="reservation.html" frameborder="0" style="width: 100%; height: 300px;"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('main-content');
+      sidebar.classList.toggle('hidden');
+      mainContent.classList.toggle('expanded');
+    }
+
+    function logout() {
+      window.location.href = 'index.html'; // Redirect to the login page
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const profileModal = document.getElementById('profile-modal');
+      if (event.target == profileModal) {
+        profileModal.style.display = "none";
+      }
+    }
+    window.onclick = function(event) {
+      const lab_rulesModal = document.getElementById('lab-rules-modal');
+      if (event.target == lab_rulesModal) {
+        lab_rulesModal.style.display = "none";
+      }
+    }
+    window.onclick = function(event) {
+      const sitInHistoryModal = document.getElementById('sitInHistory-modal');
+      if (event.target == sitInHistoryModal) {
+        sitInHistoryModal.style.display = "none";
+      }
+    }
+    window.onclick = function(event) {
+      const reservationeModal = document.getElementById('reservation-modal');
+      if (event.target == reservationeModal) {
+        reservationeModal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
