@@ -1,0 +1,24 @@
+{
+  "name": "admin-dashboard",
+  "version": "1.0.0",
+  "description": "Admin dashboard for managing students, announcements, feedback, and statistics.",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server dist2",
+    "build": "echo 'Build process not defined'",
+    "test": "echo 'No tests defined'"
+  },
+  "keywords": [
+    "admin",
+    "dashboard",
+    "students",
+    "announcements",
+    "feedback",
+    "statistics"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}

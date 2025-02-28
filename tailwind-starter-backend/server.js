@@ -91,7 +91,15 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
   console.log('Login attempt received:', req.body); // Log received data
 
-  const { id_number, password } = req.body;  // Match frontend variable names
+  const { identifier, password } = req.body;  // Match frontend variable names
+
+  // Default admin credentials
+  const defaultAdminUsername = 'admin';
+  const defaultAdminPassword = 'users';
+
+  if (identifier === defaultAdminUsername && password === defaultAdminPassword) {
+    return res.json({ message: 'Login successful', redirect: '/admin-dashboard/dist2/admin.html' });
+  }
 
   let users = readData(); // Read user data from JSON file
   console.log('Users from database:', users); // Log all users
@@ -102,7 +110,7 @@ app.post('/login', (req, res) => {
   }
 
   // Fix: Ensure the backend checks for `idNumber` (matching `data.json`)
-  const user = users.find(user => String(user.idNumber).trim() === String(id_number).trim() 
+  const user = users.find(user => String(user.idNumber).trim() === String(identifier).trim() 
       && user.password === password);
 
   if (user) {
@@ -110,7 +118,7 @@ app.post('/login', (req, res) => {
       loggedInUserId = user.idNumber; // Store logged-in user's ID
       return res.json({ message: 'Login successful', redirect: '/dashboard.html' });
   } else {
-      console.warn('Invalid login attempt for:', id_number);
+      console.warn('Invalid login attempt for:', identifier);
       return res.status(401).json({ message: 'Invalid ID Number or Password' });
   }
 });
@@ -154,6 +162,9 @@ app.post('/logout', (req, res) => {
   loggedInUserId = null;
   res.status(200).json({ message: 'Logout successful' });
 });
+
+// Serve static files from the dist2 directory for admin
+app.use('/admin-dashboard/dist2', express.static(path.join(__dirname, '..', 'admin-dashboard', 'dist2')));
 
 // Start server
 app.listen(port, () => {

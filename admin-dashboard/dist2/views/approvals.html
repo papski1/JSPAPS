@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/styles.css" rel="stylesheet">
+    <title>Approvals</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Approvals</h1>
+        <div id="approvals-list" class="approvals-list">
+            <!-- Approvals will be dynamically loaded here -->
+        </div>
+        <button id="refresh-approvals" class="btn">Refresh Approvals</button>
+    </div>
+    <script src="../js/approvals.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchApprovals();
+
+            document.getElementById('refresh-approvals').addEventListener('click', fetchApprovals);
+        });
+    </script>
+</body>
+</html>

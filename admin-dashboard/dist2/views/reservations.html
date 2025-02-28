@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/styles.css" rel="stylesheet">
+    <title>Reservations</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Reservations</h1>
+        <div id="reservations-list" class="reservations-list">
+            <!-- Reservations will be dynamically loaded here -->
+        </div>
+        <div class="actions">
+            <button id="refresh-button" class="btn">Refresh Reservations</button>
+        </div>
+    </div>
+    <script src="../js/reservations.js"></script>
+    <script>
+        document.getElementById('refresh-button').addEventListener('click', function() {
+            fetchReservations();
+        });
+
+        // Initial fetch of reservations
+        fetchReservations();
+    </script>
+</body>
+</html>

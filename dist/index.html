@@ -205,8 +205,8 @@
           <h2 class="text-3xl font-bold text-center"><i class="fa-solid fa-user"></i>Login</h2>
         </div>
         <div class="mb-4 inputbox">
-          <input id="id_number" type="text" name="id_number" required="required">
-          <span>ID Number</span>
+          <input id="identifier" type="text" name="identifier" required="required">
+          <span>ID Number or Username</span>
           <i></i>
         </div>
         <div class="mb-6 inputbox">
@@ -237,27 +237,34 @@
     </div>
   </div>
   <script>
-      document.getElementById('login-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const idNumber = document.getElementById('id_number').value;
-      const password = document.getElementById('password').value;
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const identifier = document.getElementById('identifier').value;
+        const password = document.getElementById('password').value;
 
-      fetch('/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id_number: idNumber, password })
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.message === 'Login successful') {
-              window.location.href = data.redirect; // Redirect to the dashboard
-          } else {
-              alert('Invalid ID Number or Password');
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  });
+        // Default admin credentials
+        const defaultAdminUsername = 'admin';
+        const defaultAdminPassword = 'users';
 
-  </script>  
+        if (identifier === defaultAdminUsername && password === defaultAdminPassword) {
+            window.location.href = '/admin-dashboard/dist2/admin.html'; // Redirect to the admin dashboard
+        } else {
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    window.location.href = data.redirect; // Redirect to the user dashboard
+                } else {
+                    alert('Invalid ID Number, Username, or Password');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+  </script>
 </body>
 </html>

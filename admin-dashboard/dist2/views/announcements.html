@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Announcements</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Announcements</h1>
+        <div id="announcement-form">
+            <input type="text" id="announcement-title" placeholder="Announcement Title" required>
+            <textarea id="announcement-content" placeholder="Announcement Content" required></textarea>
+            <button id="create-announcement">Create Announcement</button>
+        </div>
+        <div id="announcement-list">
+            <h2>Existing Announcements</h2>
+            <ul id="announcements"></ul>
+        </div>
+    </div>
+    <script src="../js/announcements.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Statistics</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Statistics Overview</h1>
+        <div id="statistics-data" class="statistics-section">
+            <!-- Statistics data will be dynamically loaded here -->
+        </div>
+        <button id="refresh-statistics" class="btn">Refresh Statistics</button>
+    </div>
+    <script src="../js/statistics.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchStatistics();
+            document.getElementById('refresh-statistics').addEventListener('click', fetchStatistics);
+        });
+    </script>
+</body>
+</html>
